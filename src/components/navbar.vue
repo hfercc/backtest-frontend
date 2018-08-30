@@ -40,7 +40,7 @@
                 {{username}}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Change Password</a>
+                <a class="dropdown-item" href="javascript:;" data-toggle="modal" data-target="#changePassword">Change Password</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" @click="logout()">Logout</a>
               </div>
@@ -48,6 +48,34 @@
         </template>
     </ul>
   </div>
+  <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changePasswordModalCenterTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="password_old_input">Old password</label>
+                            <input type="text" class="form-control" id="password_old_input" placeholder="Old Password"  v-model="password_old">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_new_input">New password</label>
+                            <input type="text" class="form-control" id="password_new_input" placeholder="New password"  v-model="password_new">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </nav>
 </template>
 <script>
