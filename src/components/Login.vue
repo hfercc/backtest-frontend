@@ -54,7 +54,6 @@
                     this.$root.user = response.data.user
                     this.$router.push({name: 'Reports'})
                 }).catch((e) => {
-                    console.log($('#message_slot').html())
                     if($('#message_slot').html().length == 0) {
                         $('#message_slot').append('<div class="alert alert-danger alert-dismissible fade show" role="alert">Wrong username or password! \
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"> \

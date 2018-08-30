@@ -55,17 +55,19 @@
                     <form>
                         <div class="form-group">
                             <label for="password_old_input">Old password</label>
-                            <input type="text" class="form-control" id="password_old_input" placeholder="Old Password"  v-model="password_old">
+                            <input type="password" class="form-control" id="password_old_input" placeholder="Old Password"  v-model="password_old">
                         </div>
                         <div class="form-group">
                             <label for="password_new_input">New password</label>
-                            <input type="text" class="form-control" id="password_new_input" placeholder="New password"  v-model="password_new">
+                            <input type="password" class="form-control" id="password_new_input" placeholder="New password"  v-model="password_new">
+                        </div>
+                        <div id="message_slot">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-primary" @click="change_password">Submit</button>
                 </div>
             </div>
         </div>
@@ -76,7 +78,8 @@
     export default {
         data () {
             return {
-
+              'password_old': '',
+              'password_new': ''
             }
         },
         computed: {
@@ -100,6 +103,26 @@
                 store.set('token', '')
                 this.$root.user = null
                 this.$router.push({name:"Login"})
+            },
+            change_password() {
+              axios.post('http://localhost:8000/users/change_password/', {
+                old: this.password_old,
+                new: this.password_new,
+                user: this.$root.user
+              }).then((response) => {
+                console.log(response)
+                $('#changePassword').modal('hide')
+              }).catch((e) => {
+                console.log(e)
+                if($('#message_slot').html().length == 0) {
+                      $('#message_slot').append('<div class="alert alert-danger alert-dismissible fade show" role="alert">Wrong old password or weak password! \
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> \
+                            <span aria-hidden="true">&times;</span> \
+                        </button> \
+                        </div>')
+                      $('#message_slot').alert() 
+                  }  
+              })
             }
         }
     }
