@@ -35,11 +35,15 @@
             </li>
         </template>
         <template v-else>
-            <li class="nav-item pull-right">
-                <a class="nav-link" href="#">{{username}}</a>
-            </li>
-            <li class="nav-item pull-right">
-                <a class="nav-link" href="javascript:;" @click="logout()">Logout</a>
+            <li class="nav-item dropdown pull-right">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{username}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Change Password</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" @click="logout()">Logout</a>
+              </div>
             </li>
         </template>
     </ul>
