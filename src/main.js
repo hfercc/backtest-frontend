@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
-
+import 'fontawesome'
 Vue.config.productionTip = false
 import axios from 'axios'
 import store from 'storejs'

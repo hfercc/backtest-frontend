@@ -15,10 +15,10 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="name_input">Report name</label>
-                            <input type="text" class="form-control" id="name_input" placeholder="Enter Report Name"  v-model="report_name">
+                            <label for="name_input">Alpha Name</label>
+                            <input type="text" class="form-control" id="name_input" placeholder="Enter Alpha Name"  v-model="alpha_name">
                             <div class="custom-file" style="margin-top: 50px">
-                                <input type="file" class="custom-file-input" id="customFile" @change.prevent="uploadReport">
+                                <input type="file" class="custom-file-input" id="customFile" @change.prevent="uploadReport" accept="application/zip">
                                 <label class="custom-file-label" for="customFile">{{filename}}</label>
                             </div>
                         </div>
@@ -36,10 +36,10 @@
         </div>
         <div class="col-8">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
-                    上传
+                    <i class="fa fa-plus"></i>上传
             </button>
             <ul class="list-group" style="margin-top: 50px">
-                <li class="list-group-item" v-for="report in reports">{{report.name}} {{report.filename}}</li>
+                <li class="list-group-item" v-for="report in reports">{{report.alpha_name}} {{report.filename}}</li>
             </ul>
             <nav aria-label="Page navigation example" style="margin-top: 50px;">
                 <ul class="pagination justify-content-center">
@@ -78,10 +78,11 @@
                 'reports': [],
                 'filename' : 'Choose File',
                 'fileurl' : '',
-                'report_name': '',
+                'alpha_name': '',
                 'current_page': 1,
                 'all_pages': 1,
-                'index_in_row': []
+                'index_in_row': [],
+                'param': null,
             }
         },
         mounted () {
@@ -120,39 +121,52 @@
                 let param = new FormData()
                 param.append('file', file, file.name)
                 param.append('chunk', 0)
-                axios.post('http://localhost:8000/upload/',
-                    param, {
+                this.param = param
+            },
+            submitReport () {
+                if (this.$root.user == null) {
+                    axios.get('http://localhost:8000/users/me/').then((response) => {
+                        this.$root.user = response.data
+                    }).post('http://localhost:8000/upload/',
+                    this.param, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
                     }
                 ).then((response) => {
                     this.fileurl = response.data
-                }).catch((e) => {
-                    console.log(e)
-                })
-            },
-            submitReport () {
-                if (this.$root.user == null) {
-                    axios.get('http://localhost:8000/users/me/').then((response) => {
-                        this.$root.user = response.data
-                    }).post('http://localhost:8000/report/', {
-                        author: this.$root.user.id,
-                        name: this.report_name,
-                        file:this.fileurl
+                    return axios.post('http://localhost:8000/report/', {
+                            author: this.$root.user.id,
+                            alpha_name: this.alpha_name,
+                            file:this.fileurl
+                        })
                     }).then((response) => {
                         console.log(response)
                     }).catch((e) => {
                         console.log(e)
                     })
                 } else {
-                    axios.post('http://localhost:8000/report/', {
-                        name: this.report_name,
-                        file: this.fileurl,
-                        author: this.$root.user.id,
+                    this.param.append('alpha_name', this.alpha_name)
+                    axios.post('http://localhost:8000/upload/',
+                        this.param, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        }
+                    ).then((response) => {
+                        this.fileurl = response.data
+                        return axios.post('http://localhost:8000/report/', {
+                            alpha_name: this.alpha_name,
+                            file: this.fileurl,
+                            author: this.$root.user.id,
+                        })
                     }).then((response) => {
                         console.log(response)
+                        this.alpha_name = ''
+                        this.filename = ''
                         $('#uploadModal').modal('hide')
+                    }).catch((e) => {
+                        console.log(e)
                     })
                 }
             },
