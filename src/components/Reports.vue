@@ -1,7 +1,5 @@
 <template>
     <div>
-    
-
     <!-- Modal -->
     <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -43,18 +41,15 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">Home</li>
                 </ol>
-                <div>
-                    
-                </div>
             </nav>
-
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal" style="margin-top: 0px;">
                     <i class="fa fa-plus"></i>上传
             </button>
-            <ul class="list-group" style="margin-top: 50px">
-                <li class="list-group-item" v-for="report in reports"><router-link :to="{'name':'ReportDetail',params:{'id':report.report_id}}">{{report.alpha_name}}</router-link></li>
+            <ul class="list-group" style="margin-top: 70px">
+                <li class="list-group-item" v-for="report in reports"><router-link :to="{'name':'ReportDetail', params:{'id':report.report_id}}">{{report.alpha_name}}<span class="badge badge-pill"></span></router-link></li>
             </ul>
-            <nav aria-label="Page navigation example" style="margin-top: 50px;">
+            
+            <nav aria-label="Page navigation example" style="margin-top: 20px;">
                 <ul class="pagination justify-content-center">
                     <li class="page-item" v-bind:class="{'disabled': current_page < 3}">
                         <a class="page-link" href="#" tabindex="-1">Previous</a>
@@ -96,6 +91,9 @@
                 'all_pages': 1,
                 'index_in_row': [],
                 'param': null,
+                status_success: false,
+                status_error: false,
+                status_pending: false
             }
         },
         mounted () {
@@ -128,6 +126,13 @@
             }
         },
         methods: {
+            set_status(p) {
+                if(p == 0) { this.status_pending = true }
+                else {
+                    if (p == 1) { this.status_success = true }
+                    else { this.status_error = true }
+                }
+            },
             uploadReport (p) {
                 let file = p.target.files[0]
                 this.filename = file.name
