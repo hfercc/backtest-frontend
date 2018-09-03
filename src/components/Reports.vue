@@ -17,10 +17,14 @@
                         <div class="form-group">
                             <label for="name_input">Alpha Name</label>
                             <input type="text" class="form-control" id="name_input" placeholder="Enter Alpha Name"  v-model="alpha_name">
+                            <div class="invalid-feedback">
+                            </div>
                             <div class="custom-file" style="margin-top: 50px">
                                 <input type="file" class="custom-file-input" id="customFile" @change.prevent="uploadReport" accept="application/zip">
                                 <label class="custom-file-label" for="customFile">{{filename}}</label>
                             </div>
+                        </div>
+                        <div id="message_slot">
                         </div>
                     </form>
                 </div>
@@ -35,11 +39,20 @@
         <div class="col-2">       
         </div>
         <div class="col-8">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Home</li>
+                </ol>
+                <div>
+                    
+                </div>
+            </nav>
+
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
                     <i class="fa fa-plus"></i>上传
             </button>
             <ul class="list-group" style="margin-top: 50px">
-                <li class="list-group-item" v-for="report in reports">{{report.alpha_name}} {{report.filename}}</li>
+                <li class="list-group-item" v-for="report in reports"><router-link :to="{'name':'ReportDetail',params:{'id':report.report_id}}">{{report.alpha_name}}</router-link></li>
             </ul>
             <nav aria-label="Page navigation example" style="margin-top: 50px;">
                 <ul class="pagination justify-content-center">
@@ -124,6 +137,7 @@
                 this.param = param
             },
             submitReport () {
+                $('#name_input').removeClass('is_invalid')
                 if (this.$root.user == null) {
                     axios.get('http://localhost:8000/users/me/').then((response) => {
                         this.$root.user = response.data
@@ -144,6 +158,14 @@
                         console.log(response)
                     }).catch((e) => {
                         console.log(e)
+                        if($('#message_slot').html().length == 0) {
+                            $('#message_slot').append('<div class="alert alert-danger alert-dismissible fade show" role="alert">因子名错误！ \
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> \
+                                <span aria-hidden="true">&times;</span> \
+                                </button> \
+                                </div>')
+                            $('#message_slot').alert() 
+                        }          
                     })
                 } else {
                     this.param.append('alpha_name', this.alpha_name)
@@ -167,7 +189,8 @@
                         $('#uploadModal').modal('hide')
                     }).catch((e) => {
                         console.log(e)
-                    })
+                        $('#name_input').addClass('is_invalid')
+                    })     
                 }
             },
             goto_page (page) {

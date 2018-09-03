@@ -10,7 +10,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
-                    <input v-model="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+                    <input v-model="password" type="password" class="form-control" id="password_input" placeholder="Password" required>
                 </div>
                 <div id="message_slot">
                 </div>
@@ -23,6 +23,9 @@
     .form-control, .form-control:focus, .form-control:active {
         outline: none;
         box-shadow: none
+    }
+    .is-invalid {
+        border-color: #aa3528;;
     }
 </style>
 <script>
@@ -46,6 +49,8 @@
         },
         methods: {
             Submit () {
+                $('#username_input').removeClass('is-invalid')
+                $('#password_input').removeClass('is-invalid') 
                 axios.post('http://localhost:8000/login/', {
                     username: this.username,
                     password: this.password
@@ -54,17 +59,8 @@
                     this.$root.user = response.data.user
                     this.$router.push({name: 'Reports'})
                 }).catch((e) => {
-                    if($('#message_slot').html().length == 0) {
-                        $('#message_slot').append('<div class="alert alert-danger alert-dismissible fade show" role="alert">Wrong username or password! \
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> \
-                            <span aria-hidden="true">&times;</span> \
-                        </button> \
-                        </div>')
-                        $('#message_slot').alert() 
-                        if (e.status_code == 401) {
-                            store.set('token', '')
-                        }
-                    }          
+                    $('#username_input').addClass('is-invalid')
+                    $('#password_input').addClass('is-invalid')          
                 })
             }
         }
