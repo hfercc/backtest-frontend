@@ -98,9 +98,9 @@
                 console.log(p)
                 if(p == 1) { this.status_pending = true }
                 else {
-                    if (p == 2) { this.status_success = true }
+                    if (p == 2) { this.status_error = true }
                     else 
-                        if (p == 3) { this.status_error = true }
+                        if (p == 3) { this.status_success = true }
                         else this.status_waiting = true
                 }
             },
