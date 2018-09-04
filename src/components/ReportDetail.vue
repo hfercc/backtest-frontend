@@ -42,7 +42,7 @@
                 </ol>
             </nav>
             <h2>{{new_report.alpha_name}}</h2>
-            status: <span class="badge badge-pill" v-bind:class="{'badge-warning': status_pending, 'badge-success':status_success, 'badge-alert':status_error}">
+            status: <span class="badge badge-pill" v-bind:class="{'badge-warning': status_pending, 'badge-success':status_success, 'badge-danger':status_error}">
                 <template v-if="report.status == 0">
                     pending
                 </template>
