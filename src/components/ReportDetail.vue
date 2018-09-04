@@ -52,10 +52,11 @@
                     </template>
                     <template v-else>
                         <template v-if="report.status == 2">
-                            failed
+                            finished
                         </template>
                         <template v-else>
-                            finished
+                            failed
+                            
                         </template>   
                     </template>
                 </template>
@@ -98,9 +99,9 @@
                 console.log(p)
                 if(p == 1) { this.status_pending = true }
                 else {
-                    if (p == 2) { this.status_error = true }
+                    if (p == 2) { this.status_success = true }
                     else 
-                        if (p == 3) { this.status_success = true }
+                        if (p == 3) { this.status_error = true }
                         else this.status_waiting = true
                 }
             },
