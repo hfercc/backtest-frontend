@@ -51,7 +51,12 @@
                         success
                     </template>
                     <template v-else>
+                        <template v-if="report.status == 2">
                         failed
+                        </template>
+                        <template v-else>
+                            waiting
+                        </template>   
                     </template>
                 </template>
             </span>
@@ -96,7 +101,7 @@
                     if (p == 2) { this.status_success = true }
                     else 
                         if (p == 3) { this.status_error = true }
-                        else this.status_waiting = True
+                        else this.status_waiting = true
                 }
             },
             uploadReport (p) {
