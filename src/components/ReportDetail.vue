@@ -44,18 +44,18 @@
             <h2>{{new_report.alpha_name}}</h2>
             status: <span class="badge badge-pill" v-bind:class="{'badge-warning': status_pending, 'badge-success':status_success, 'badge-danger':status_error, 'badge-primary':status_waiting}">
                 <template v-if="report.status == 0">
-                    pending
+                    waiting
                 </template>
                 <template v-else>
                     <template v-if="report.status == 1">
-                        success
+                        pending
                     </template>
                     <template v-else>
                         <template v-if="report.status == 2">
-                        failed
+                            failed
                         </template>
                         <template v-else>
-                            waiting
+                            finished
                         </template>   
                     </template>
                 </template>
