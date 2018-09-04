@@ -42,7 +42,7 @@
                 </ol>
             </nav>
             <h2>{{new_report.alpha_name}}</h2>
-            status: <span class="badge badge-pill" v-bind:class="{'badge-warning': status_pending, 'badge-success':status_success, 'badge-danger':status_error}">
+            status: <span class="badge badge-pill" v-bind:class="{'badge-warning': status_pending, 'badge-success':status_success, 'badge-danger':status_error, 'badge-primary':status_waiting}">
                 <template v-if="report.status == 0">
                     pending
                 </template>
@@ -74,7 +74,8 @@
                 filename: 'Choose File',
                 status_success: false,
                 status_error: false,
-                status_pending: false
+                status_pending: false,
+                status_waiting: false,
             }
         },
         mounted () {
@@ -90,10 +91,12 @@
         methods: {
             set_status(p) {
                 console.log(p)
-                if(p == 0) { this.status_pending = true }
+                if(p == 1) { this.status_pending = true }
                 else {
-                    if (p == 1) { this.status_success = true }
-                    else { this.status_error = true }
+                    if (p == 2) { this.status_success = true }
+                    else 
+                        if (p == 3) { this.status_error = true }
+                        else this.status_waiting = True
                 }
             },
             uploadReport (p) {
