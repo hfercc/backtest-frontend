@@ -91,14 +91,14 @@
                 status_waiting: false,
                 performace: null,
                 columns: [
-                    {field: 'period', title: 'Period', titleAlign: 'center',columnAlign:'center'},
+                    {field: 'period', title: 'Period', width: 100, titleAlign: 'center',columnAlign:'center'},
                     {field: '%Tvr', title:'%Tvr', width: 20, titleAlign: 'center',columnAlign:'center'},
                     {field: '%CumRet', title: '%CumRet', width: 20, titleAlign: 'center',columnAlign:'center'},
                     {field: '%Ret', title: '%Ret', width: 20, titleAlign: 'center',columnAlign:'center'},
-                    {field: 'Sharpe', title: 'Sharpe', titleAlign: 'center',columnAlign:'center'},
-                    {field: 'Pnl', title: 'Pnl', titleAlign: 'center',columnAlign:'center'},
-                    {field: 'CumPnl', title: 'CumPnl', titleAlign: 'center',columnAlign:'center'},
-                    {field: 'IR', title: 'IR', titleAlign: 'center',columnAlign:'center'},
+                    {field: 'Sharpe', title: 'Sharpe', width: 20, titleAlign: 'center',columnAlign:'center'},
+                    {field: 'Pnl', title: 'Pnl', width: 20, titleAlign: 'center',columnAlign:'center'},
+                    {field: 'CumPnl', title: 'CumPnl', width: 20, titleAlign: 'center',columnAlign:'center'},
+                    {field: 'IR', title: 'IR', titleAlign: width: 20, 'center',columnAlign:'center'},
                 ]
             }
         },
