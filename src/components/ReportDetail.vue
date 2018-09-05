@@ -63,7 +63,7 @@
             </span>
             <div class="divider"></div>
             <img v-if="report.status == 2" :src="'http://localhost:8000/files/' + report.alpha_name + '/output_pnl.png'">
-            <v-table :width="1000" :table-data="performace" :show-vertical-border="false" :columns="columns"></v-table>
+            <v-table :width="900" :table-data="performace" :show-vertical-border="false" :columns="columns"></v-table>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
                     <i class="fa fa-plus"></i>修改
             </button>
@@ -91,14 +91,14 @@
                 status_waiting: false,
                 performace: null,
                 columns: [
-                    {field: 'period', title: 'Period', width: 100, titleAlign: 'center',columnAlign:'center'},
-                    {field: '%Tvr', title:'%Tvr', width: 20, titleAlign: 'center',columnAlign:'center'},
-                    {field: '%CumRet', title: '%CumRet', width: 20, titleAlign: 'center',columnAlign:'center'},
-                    {field: '%Ret', title: '%Ret', width: 20, titleAlign: 'center',columnAlign:'center'},
-                    {field: 'Sharpe', title: 'Sharpe', width: 20, titleAlign: 'center',columnAlign:'center'},
-                    {field: 'Pnl', title: 'Pnl', width: 20, titleAlign: 'center',columnAlign:'center'},
-                    {field: 'CumPnl', title: 'CumPnl', width: 20, titleAlign: 'center',columnAlign:'center'},
-                    {field: 'IR', title: 'IR', width: 20, titleAlign: 'center',columnAlign:'center'},
+                    {field: 'period', title: 'Period', width: 200, titleAlign: 'center',columnAlign:'center'},
+                    {field: '%Tvr', title:'%Tvr', width: 100, titleAlign: 'center',columnAlign:'center'},
+                    {field: '%CumRet', title: '%CumRet', width: 100, titleAlign: 'center',columnAlign:'center'},
+                    {field: '%Ret', title: '%Ret', width: 100, titleAlign: 'center',columnAlign:'center'},
+                    {field: 'Sharpe', title: 'Sharpe', width: 100, titleAlign: 'center',columnAlign:'center'},
+                    {field: 'Pnl', title: 'Pnl', width: 100, titleAlign: 'center',columnAlign:'center'},
+                    {field: 'CumPnl', title: 'CumPnl', width: 100, titleAlign: 'center',columnAlign:'center'},
+                    {field: 'IR', title: 'IR', width: 100, titleAlign: 'center',columnAlign:'center'},
                 ]
             }
         },
