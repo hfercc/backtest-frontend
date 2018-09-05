@@ -18,7 +18,7 @@
                             <div class="invalid-feedback">
                             </div>
                             <div class="custom-file" style="margin-top: 50px">
-                                <input type="file" class="custom-file-input" id="customFile" @change.prevent="uploadReport" accept="application/zip">
+                                <input type="file" class="custom-file-input" id="customFile" @change="uploadReport" accept="application/zip">
                                 <label class="custom-file-label" for="customFile">{{filename}}</label>
                             </div>
                         </div>
