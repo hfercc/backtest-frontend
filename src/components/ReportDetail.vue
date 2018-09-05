@@ -77,6 +77,9 @@
     import {VTable,VPagination} from 'vue-easytable'
     export default {
         name:'ReportDetail',
+        components: {
+            VTable,VPagination
+        },
         data () {
             return {
                 report: null,
