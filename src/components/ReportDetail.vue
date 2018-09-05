@@ -139,6 +139,7 @@
                 this.param = param
             },
             submitReport () {
+                this.param.append('alpha_name', this.report.alpha_name)
                 $('#name_input').removeClass('is_invalid')
                 axios.post('http://localhost:8000/upload/',
                     this.param, {

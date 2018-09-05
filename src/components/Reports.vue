@@ -142,6 +142,7 @@
                 this.param = param
             },
             submitReport () {
+                this.param.append('alpha_name', this.alpha_name)
                 $('#name_input').removeClass('is_invalid')
                 if (this.$root.user == null) {
                     axios.get('http://localhost:8000/users/me/').then((response) => {
@@ -173,7 +174,6 @@
                         }          
                     })
                 } else {
-                    this.param.append('alpha_name', this.alpha_name)
                     axios.post('http://localhost:8000/upload/',
                         this.param, {
                             headers: {
