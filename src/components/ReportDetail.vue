@@ -151,6 +151,7 @@
                             }
                         }
                     ).then((response) => {
+                        this.filename = ''
                         return axios.patch('http://localhost:8000/report/' + this.report.report_id + '/', {
                             file: this.report.file,
                         })
@@ -158,6 +159,7 @@
                         $('#uploadModal').modal('hide')
                     //this.new_report = this.report = response.data
                     }).catch((e) => {
+                        this.filename = ''
                     //$('#name_input').addClass('is_invalid')
                     })
                 } else {
