@@ -98,7 +98,7 @@
                     {field: 'Sharpe', title: 'Sharpe', width: 20, titleAlign: 'center',columnAlign:'center'},
                     {field: 'Pnl', title: 'Pnl', width: 20, titleAlign: 'center',columnAlign:'center'},
                     {field: 'CumPnl', title: 'CumPnl', width: 20, titleAlign: 'center',columnAlign:'center'},
-                    {field: 'IR', title: 'IR', titleAlign: width: 20, 'center',columnAlign:'center'},
+                    {field: 'IR', title: 'IR', width: 20, titleAlign: 'center',columnAlign:'center'},
                 ]
             }
         },
