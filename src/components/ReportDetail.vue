@@ -65,6 +65,7 @@
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
                     <i class="fa fa-plus"></i>修改
             </button>
+            <img v-if="report.status == 2" :src="'/files/' + report.alpha_name + '/output_pnl.png'">
         </div>
         <div class="col-2">
         </div>
