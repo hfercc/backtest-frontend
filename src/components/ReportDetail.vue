@@ -142,9 +142,10 @@
                 axios.patch('http://localhost:8000/report/' + this.report.report_id + '/', {
                     file: this.report.file,
                 }).then((response) => {
-                    this.new_report = this.report = response.data
+                    $('#uploadModal').modal('hide')
+                    //this.new_report = this.report = response.data
                 }).catch((e) => {
-                    $('#name_input').addClass('is_invalid')
+                    //$('#name_input').addClass('is_invalid')
                 })
             }
         }
