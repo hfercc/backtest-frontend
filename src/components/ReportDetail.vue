@@ -63,6 +63,7 @@
             </span>
             <div class="divider"></div>
             <img v-if="report.status == 2" :src="'http://localhost:8000/files/' + report.alpha_name + '/output_pnl.png'">
+            <v-table :width="1000" :table-data="performace" :show-vertical-border="false"></v-table>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
                     <i class="fa fa-plus"></i>修改
             </button>
@@ -85,6 +86,7 @@
                 status_error: false,
                 status_pending: false,
                 status_waiting: false,
+                performace: null,
             }
         },
         mounted () {
@@ -93,6 +95,13 @@
                 console.log(response)
                 this.new_report = this.report = response.data
                 this.set_status(response.data.status)
+                if (report.status == 2) {
+                    axios.get('http://localhost:8000/files/' + report.alpha_name + '/output_performance.csv').then((response) => {
+                        this.performace = response.data
+                    }).catch(e) => {
+                        console.log(e)
+                    }
+                }
             }).catch((e) => {
                 console.log(e)
             })
