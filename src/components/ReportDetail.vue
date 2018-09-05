@@ -139,7 +139,7 @@
                 param.append('file', file, file.name)
                 param.append('chunk', 0)
                 this.param = param
-                this.has_changed = True
+                this.has_changed = true
             },
             submitReport () {
                 $('#name_input').removeClass('is_invalid')
