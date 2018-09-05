@@ -132,6 +132,7 @@
                 }
             },
             uploadReport (p) {
+                console.log('changed')
                 let file = p.target.files[0]
                 this.filename = file.name
                 let param = new FormData()
