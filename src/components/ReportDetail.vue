@@ -87,6 +87,8 @@
                 status_pending: false,
                 status_waiting: false,
                 performace: null,
+                has_changed: false,
+                param: null,
                 columns: [
                     {field: 'period', title: 'Period', width: 200, titleAlign: 'center',columnAlign:'center'},
                     {field: '%Tvr', title:'%Tvr', width: 100, titleAlign: 'center',columnAlign:'center'},
@@ -136,17 +138,37 @@
                 param.append('file', file, file.name)
                 param.append('chunk', 0)
                 this.param = param
+                this.has_changed = True
             },
             submitReport () {
                 $('#name_input').removeClass('is_invalid')
-                axios.patch('http://localhost:8000/report/' + this.report.report_id + '/', {
-                    file: this.report.file,
-                }).then((response) => {
-                    $('#uploadModal').modal('hide')
+                if (this.has_changed) {
+                    axios.post('http://localhost:8000/upload/',
+                        this.param, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        }
+                    ).then((response) => {
+                        return axios.patch('http://localhost:8000/report/' + this.report.report_id + '/', {
+                            file: this.report.file,
+                        })
+                    }).then((response) => {
+                        $('#uploadModal').modal('hide')
                     //this.new_report = this.report = response.data
-                }).catch((e) => {
+                    }).catch((e) => {
                     //$('#name_input').addClass('is_invalid')
-                })
+                    })
+                } else {
+                    axios.patch('http://localhost:8000/report/' + this.report.report_id + '/', {
+                        file: this.report.file,
+                    }).then((response) => {
+                        $('#uploadModal').modal('hide')
+                        //this.new_report = this.report = response.data
+                    }).catch((e) => {
+                        //$('#name_input').addClass('is_invalid')
+                    })
+                }
             }
         }
     }
