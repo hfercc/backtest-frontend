@@ -35,7 +35,7 @@
         <div class="col-2">
         </div>
         <div class="col-8">
-            <nav aria-label="breadcrumb">
+            <nav aria-label="breadcrumb" style="margin-top: 20px;">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item" aria-current="page"><router-link :to="{name:'Reports'}">Home</router-link></li>
                     <li class="breadcrumb-item active" aria-current="page">Detail</li>
@@ -64,7 +64,7 @@
             <div class="divider"></div>
             <img v-if="report.status == 2" :src="'http://localhost:8000/files/' + report.alpha_name + '/output_pnl.png'">
             <v-table :width="900" :table-data="performace" :show-vertical-border="false" :columns="columns" style="margin-left: auto; margin-right: auto;"></v-table>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
+            <button type="button" style="margin-top: 20px;" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
                     <i class="fa fa-plus"></i>修改
             </button>
         </div>
