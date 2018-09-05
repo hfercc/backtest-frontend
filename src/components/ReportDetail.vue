@@ -143,6 +143,7 @@
             },
             submitReport () {
                 $('#name_input').removeClass('is_invalid')
+                console.log(this.has_changed)
                 if (this.has_changed) {
                     axios.post('http://localhost:8000/upload/',
                         this.param, {
