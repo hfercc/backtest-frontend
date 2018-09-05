@@ -87,7 +87,6 @@
                 status_pending: false,
                 status_waiting: false,
                 performace: null,
-                has_changed: false,
                 param: null,
                 columns: [
                     {field: 'period', title: 'Period', width: 200, titleAlign: 'center',columnAlign:'center'},
@@ -132,47 +131,33 @@
                 }
             },
             uploadReport (p) {
-                console.log('changed')
                 let file = p.target.files[0]
                 this.filename = file.name
                 let param = new FormData()
                 param.append('file', file, file.name)
                 param.append('chunk', 0)
                 this.param = param
-                this.has_changed = true
             },
             submitReport () {
                 $('#name_input').removeClass('is_invalid')
-                console.log(this.has_changed)
-                if (this.has_changed) {
-                    axios.post('http://localhost:8000/upload/',
-                        this.param, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
+                axios.post('http://localhost:8000/upload/',
+                    this.param, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
                         }
-                    ).then((response) => {
-                        this.filename = ''
-                        return axios.patch('http://localhost:8000/report/' + this.report.report_id + '/', {
-                            file: this.report.file,
-                        })
-                    }).then((response) => {
-                        $('#uploadModal').modal('hide')
-                    //this.new_report = this.report = response.data
-                    }).catch((e) => {
-                        this.filename = ''
-                    //$('#name_input').addClass('is_invalid')
-                    })
-                } else {
-                    axios.patch('http://localhost:8000/report/' + this.report.report_id + '/', {
+                    }
+                ).then((response) => {
+                    this.filename = ''
+                    return axios.patch('http://localhost:8000/report/' + this.report.report_id + '/', {
                         file: this.report.file,
-                    }).then((response) => {
-                        $('#uploadModal').modal('hide')
-                        //this.new_report = this.report = response.data
-                    }).catch((e) => {
-                        //$('#name_input').addClass('is_invalid')
                     })
-                }
+                }).then((response) => {
+                    $('#uploadModal').modal('hide')
+                //this.new_report = this.report = response.data
+                }).catch((e) => {
+                    this.filename = ''
+                //$('#name_input').addClass('is_invalid')
+                })
             }
         }
     }
