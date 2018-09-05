@@ -112,6 +112,7 @@
                     console.log('got')
                     axios.get('http://localhost:8000/files/' + response.data.alpha_name + '/output_performance.csv').then((response) => {
                         this.performace = response.data
+                        console.log(this.performace)
                     }).catch(e => {
                         console.log(e)
                     })
