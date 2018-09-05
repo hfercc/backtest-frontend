@@ -12,10 +12,7 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="name_input">Alpha Name</label>
-                            <input type="text" class="form-control" id="name_input" placeholder="Enter Alpha Name"  v-model="report.alpha_name">
-                            <div class="invalid-feedback">
-                            </div>
+                            重新上传文件
                             <div class="custom-file" style="margin-top: 50px">
                                 <input type="file" class="custom-file-input" id="customFile" @change.prevent="uploadReport" accept="application/zip">
                                 <label class="custom-file-label" for="customFile">{{filename}}</label>
@@ -143,10 +140,7 @@
             submitReport () {
                 $('#name_input').removeClass('is_invalid')
                 axios.patch('http://localhost:8000/report/' + this.report.report_id + '/', {
-                    alpha_name: this.report.alpha_name,
-                    status: 0,
                     file: this.report.file,
-                    author: this.report.author
                 }).then((response) => {
                     this.new_report = this.report = response.data
                 }).catch((e) => {
