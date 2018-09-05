@@ -95,7 +95,7 @@
                 console.log(response)
                 this.new_report = this.report = response.data
                 this.set_status(response.data.status)
-                if (this.report.status == 2) {
+                if (response.data.status == 2) {
                     console.log('got')
                     axios.get('http://localhost:8000/files/' + report.alpha_name + '/output_performance.csv').then((response) => {
                         this.performace = response.data
