@@ -97,7 +97,7 @@
                 this.set_status(response.data.status)
                 if (response.data.status == 2) {
                     console.log('got')
-                    axios.get('http://localhost:8000/files/' + report.alpha_name + '/output_performance.csv').then((response) => {
+                    axios.get('http://localhost:8000/files/' + response.data.alpha_name + '/output_performance.csv').then((response) => {
                         this.performace = response.data
                     }).catch(e => {
                         console.log(e)
