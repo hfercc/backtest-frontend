@@ -9,6 +9,7 @@ import 'fontawesome'
 Vue.config.productionTip = false
 import axios from 'axios'
 import store from 'storejs'
+import './assets/style.css'
 
 function GetUrlParams(paraName) {
 　　　　var url = document.location.toString();
@@ -32,7 +33,36 @@ function GetUrlParams(paraName) {
 　　　　}
 　　}
 
-
+function goodTime(str){
+  var now = new Date().getTime(),
+  oldTime = new Date(str).getTime(),
+  difference = now - oldTime,
+  result='',
+  minute = 1000 * 60,
+  hour = minute * 60,
+  day = hour * 24,
+  halfamonth = day * 15,
+  month = day * 30,
+  year = month * 12,
+ 
+  _year = difference/year,
+  _month =difference/month,
+  _week =difference/(7*day),
+  _day =difference/day,
+  _hour =difference/hour,
+  _min =difference/minute;
+  if(_year>=1) {result= "    Uploaded " + ~~(_year) + " year(s) ago"}
+  else if(_month>=1) {result= "    Uploaded " + ~~(_month) + " month(s) ago"}
+  else if(_week>=1) {result= "    Uploaded " + ~~(_week) + " week(s) ago"}
+  else if(_day>=1) {result= "    Uploaded " + ~~(_day) +" day(s) ago"}
+  else if(_hour>=1) {result= "    Uploaded " + ~~(_hour) +" hour(s) ago"}
+  else if(_min>=1) {result= "    Uploaded " + ~~(_min) +" minutes(s) ago"}
+  else result="    Just now";
+  return result;
+}
+Vue.filter('time', function (value) {
+  return goodTime(value);
+})
 window.GetUrlParams = GetUrlParams
 
 axios.interceptors.request.use(

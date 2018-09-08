@@ -1,33 +1,24 @@
 <template>
     <div class="row">
         <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <form class="needs-validation">
+        <div class="col-md-4 form-container">
+            <form class="needs-validation form-login">
                 <div class="form-group">
                     <label for="username_input">Name</label>
                     <input v-model="username" type="text" class="form-control" id="username_input" aria-describedby="username" placeholder="Enter your name" required>
                     <small id="username" class="form-text text-muted">Only support login by username.</small>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
+                    <label for="password_input">Password</label>
                     <input v-model="password" type="password" class="form-control" id="password_input" placeholder="Password" required>
                 </div>
                 <div id="message_slot">
                 </div>
-                <button type="submit" class="btn btn-primary" @click.prevent="Submit()">Login</button>
+                <button type="submit" class="btn btn-custom" @click.prevent="Submit()">Login</button>
             </form>
         </div>
     </div>
 </template>
-<style>
-    .form-control, .form-control:focus, .form-control:active {
-        outline: none;
-        box-shadow: none
-    }
-    .is-invalid {
-        border-color: #aa3528;;
-    }
-</style>
 <script>
     export default {
         name: 'Login',

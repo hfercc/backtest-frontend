@@ -5,7 +5,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="uploadModalCenterTitle">Modal title</h5>
+                    <h5 class="modal-title" id="uploadModalCenterTitle">上传报告</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -15,12 +15,13 @@
                         <div class="form-group">
                             <label for="name_input">Alpha Name</label>
                             <input type="text" class="form-control" id="name_input" placeholder="Enter Alpha Name"  v-model="alpha_name">
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" id="alpha">
                             </div>
                             <div class="custom-file" style="margin-top: 50px">
                                 <input type="file" class="custom-file-input" id="customFile" @change="uploadReport" accept="application/zip">
                                 <label class="custom-file-label" for="customFile">{{filename}}</label>
                             </div>
+                            <div class="invalid-feedback" id="file"></div>
                         </div>
                         <div id="message_slot">
                         </div>
@@ -28,7 +29,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" @click="submitReport()">Submit</button>
+                    <button type="button" class="btn btn-custom" @click="submitReport()">Submit</button>
                 </div>
             </div>
         </div>
@@ -42,11 +43,14 @@
                     <li class="breadcrumb-item active" aria-current="page">Home</li>
                 </ol>
             </nav>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal" style="margin-top: 0px;">
-                    <i class="fa fa-plus"></i>上传
+            <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#uploadModal" style="margin-top: 0px;">
+                    <i class="fa fa-plus"></i>Upload
+            </button>
+            <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#uploadModal" style="margin-top: 0px;margin-left: 20px;">
+                    <i class="fa fa-plus"></i>Sort
             </button>
             <ul class="list-group" style="margin-top: 70px">
-                <li class="list-group-item" v-for="report in reports"><router-link :to="{'name':'ReportDetail', params:{'id':report.report_id}}">{{report.alpha_name}}<span class="badge badge-pill"></span></router-link></li>
+                <li class="list-group-item" v-for="report in reports"><router-link :to="{'name':'ReportDetail', params:{'id':report.report_id}}" class="report-link">{{report.alpha_name}}<span class="report-time">{{report.add_time | time}}</span><span class="badge badge-pill"></span></router-link></li>
             </ul>
             
             <nav aria-label="Page navigation example" style="margin-top: 20px;">
@@ -142,6 +146,28 @@
                 this.param = param
             },
             submitReport () {
+                $('#file').css('display', 'none')
+                $('#alpha').css('display', 'none')
+                $('#name_input').removeClass('is_invalid')
+                if (this.param == null) {
+                    $('#file').html('Must select a file.')
+                    $('#file').css('display', 'block')
+                    return
+
+                } 
+                console.log(this.alpha_name.length)
+                if (this.alpha_name.replace(/(^s*)|(s*$)/g, "") == 0) {
+                    $('#name_input').addClass('is_invalid')
+                    $('#alpha').html('Must have a name.')
+                        $('#alpha').css('display', 'block')
+                    return 
+                }
+                if (this.alpha_name !== this.filename) {
+                    $('#name_input').addClass('is_invalid')
+                    $('#alpha').html('File name and alpha name must be the same.')
+                        $('#alpha').css('display', 'block')
+                    return 
+                }
                 this.param.append('alpha_name', this.alpha_name)
                 $('#name_input').removeClass('is_invalid')
                 if (this.$root.user == null) {
@@ -163,15 +189,9 @@
                     }).then((response) => {
                         console.log(response)
                     }).catch((e) => {
-                        console.log(e)
-                        if($('#message_slot').html().length == 0) {
-                            $('#message_slot').append('<div class="alert alert-danger alert-dismissible fade show" role="alert">因子名错误！ \
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> \
-                                <span aria-hidden="true">&times;</span> \
-                                </button> \
-                                </div>')
-                            $('#message_slot').alert() 
-                        }          
+                        $('#name_input').addClass('is_invalid')
+                        $('#alpha').html('Duplicated name.')
+                        $('#alpha').css('display', 'block')
                     })
                 } else {
                     axios.post('http://localhost:8000/upload/',
@@ -195,6 +215,8 @@
                     }).catch((e) => {
                         console.log(e)
                         $('#name_input').addClass('is_invalid')
+                        $('#alpha').html('Duplicated name.')
+                        $('#alpha').css('display', 'block')
                     })     
                 }
             },

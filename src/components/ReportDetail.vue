@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="uploadModalCenterTitle">Modal title</h5>
+                    <h5 class="modal-title" id="uploadModalCenterTitle">修改报告</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" @click="submitReport()">Submit</button>
+                    <button type="button" class="btn btn-custom" @click="submitReport()">Submit</button>
                 </div>
             </div>
         </div>
@@ -34,12 +34,12 @@
         <div class="col-8">
             <nav aria-label="breadcrumb" style="margin-top: 20px;">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item" aria-current="page"><router-link :to="{name:'Reports'}">Home</router-link></li>
+                    <li class="breadcrumb-item" aria-current="page"><router-link :to="{name:'Reports'}" class="report-link">Home</router-link></li>
                     <li class="breadcrumb-item active" aria-current="page">Detail</li>
                 </ol>
             </nav>
-            <h2>{{new_report.alpha_name}}</h2>
-            status: <span class="badge badge-pill" v-bind:class="{'badge-warning': status_pending, 'badge-success':status_success, 'badge-danger':status_error, 'badge-primary':status_waiting}">
+            <h1>{{new_report.alpha_name}}</h1>
+            <p>status: <span class="badge badge-pill" v-bind:class="{'badge-warning': status_pending, 'badge-success':status_success, 'badge-danger':status_error, 'badge-primary':status_waiting}">
                 <template v-if="report.status == 0">
                     waiting
                 </template>
@@ -57,11 +57,38 @@
                         </template>   
                     </template>
                 </template>
-            </span>
-            <div class="divider"></div>
+            </span></p>
             <img v-if="report.status == 2" :src="'http://localhost:8000/files/' + report.alpha_name + '/output_pnl.png'">
-            <v-table :width="900" :table-data="performace" :show-vertical-border="false" :columns="columns" style="margin-left: auto; margin-right: auto;"></v-table>
-            <button type="button" style="margin-top: 20px;" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
+            <div class="table-responsive" v-if="report.status == 2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Period</th>
+                            <th scope="col">%Tvr</th>
+                            <th scope="col">%CumRet</th>
+                            <th scope="col">%Ret</th>
+                            <th scope="col">Sharpe</th>
+                            <th scope="col">Pnl</th>
+                            <th scope="col">CumPnl</th>
+                            <th scope="col">IR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="p in performace">
+                            <td>{{p['period']}}</td>
+                            <td>{{p['%Tvr']}}</td>
+                            <td>{{p['%CumRet']}}</td>
+                            <td>{{p['%Ret']}</td>
+                            <td>{{p['Sharpe']}</td>
+                            <td>{{p['Pnl']}}</td>
+                            <td>{{p['CumPnl']}}</td>
+                            <td>{{p['IR']}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <button type="button" style="margin-top: 20px;" class="btn btn-custom" data-toggle="modal" data-target="#uploadModal">
                     <i class="fa fa-plus"></i>修改
             </button>
         </div>
@@ -88,16 +115,6 @@
                 status_waiting: false,
                 performace: null,
                 param: null,
-                columns: [
-                    {field: 'period', title: 'Period', width: 200, titleAlign: 'center',columnAlign:'center'},
-                    {field: '%Tvr', title:'%Tvr', width: 100, titleAlign: 'center',columnAlign:'center'},
-                    {field: '%CumRet', title: '%CumRet', width: 100, titleAlign: 'center',columnAlign:'center'},
-                    {field: '%Ret', title: '%Ret', width: 100, titleAlign: 'center',columnAlign:'center'},
-                    {field: 'Sharpe', title: 'Sharpe', width: 100, titleAlign: 'center',columnAlign:'center'},
-                    {field: 'Pnl', title: 'Pnl', width: 100, titleAlign: 'center',columnAlign:'center'},
-                    {field: 'CumPnl', title: 'CumPnl', width: 100, titleAlign: 'center',columnAlign:'center'},
-                    {field: 'IR', title: 'IR', width: 100, titleAlign: 'center',columnAlign:'center'},
-                ]
             }
         },
         mounted () {
