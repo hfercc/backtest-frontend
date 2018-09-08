@@ -78,8 +78,8 @@
                             <td>{{p['period']}}</td>
                             <td>{{p['%Tvr']}}</td>
                             <td>{{p['%CumRet']}}</td>
-                            <td>{{p['%Ret']}</td>
-                            <td>{{p['Sharpe']}</td>
+                            <td>{{p['%Ret']}}</td>
+                            <td>{{p['Sharpe']}}</td>
                             <td>{{p['Pnl']}}</td>
                             <td>{{p['CumPnl']}}</td>
                             <td>{{p['IR']}}</td>
