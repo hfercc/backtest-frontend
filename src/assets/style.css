@@ -45,6 +45,10 @@
     color: #801818;
 }
 
+.report-link + .report-link {
+    margin-left: 20px;
+}
+
 .report-link:hover,  .report-link:active{
     color: #801818;
     text-decoration: none;

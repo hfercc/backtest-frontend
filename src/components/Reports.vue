@@ -46,9 +46,7 @@
             <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#uploadModal" style="margin-top: 0px;">
                     <i class="fa fa-plus"></i>Upload
             </button>
-            <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#uploadModal" style="margin-top: 0px;margin-left: 20px;">
-                    <i class="fa fa-plus"></i>Sort
-            </button>
+            <div style="float: left;padding: 7px 0px;"><span style="margin: 0px 10px;">Sort by:</span><router-link :to="{name: 'Reports', query: {ordering: 'add_time'}}" class="report-link">Create time</router-link><router-link :to="{name: 'Reports', query: {ordering: 'alpha_name'}}" class="report-link">Alpha name</router-link><router-link :to="{name: 'Reports', query: {ordering: 'status'}}" class="report-link">Status</router-link></div>
             <ul class="list-group" style="margin-top: 70px">
                 <li class="list-group-item" v-for="report in reports"><router-link :to="{'name':'ReportDetail', params:{'id':report.report_id}}" class="report-link">{{report.alpha_name}}<span class="report-time">{{report.add_time | time}}</span><span class="badge badge-pill"></span></router-link></li>
             </ul>
@@ -102,8 +100,9 @@
         },
         mounted () {
             let page = GetUrlParams('p')
+            let ordering = GetUrlParams('ordering')
             if (!page) {
-                axios.get('http://localhost:8000/report/').then((response) => {
+                axios.get('http://localhost:8000/report/?ordering=' + ordering).then((response) => {
                     this.all_pages = response.data.count / 10 + 1
                     for (let i = 1; i <= min(this.all_pages, 3); i++) {
                         this.index_in_row.push(i)
@@ -115,7 +114,7 @@
                     console.log(e)
                 })
             } else {
-                axios.get('http://localhost:8000/report/?p=' + page).then((response) => {
+                axios.get('http://localhost:8000/report/?ordering=' + ordering + '?p=' + page).then((response) => {
                     this.all_pages = response.data.count / 10 + 1
                     for (let i = max(page-(this.all_pages - page)>1?2:1,1); i <= min(this.all_pages, page + 3); i++) {
                         this.index_in_row.push(i)
@@ -162,7 +161,7 @@
                         $('#alpha').css('display', 'block')
                     return 
                 }
-                if (this.alpha_name !== this.filename) {
+                if (this.alpha_name + '.zip' !== this.filename) {
                     $('#name_input').addClass('is_invalid')
                     $('#alpha').html('File name and alpha name must be the same.')
                         $('#alpha').css('display', 'block')
