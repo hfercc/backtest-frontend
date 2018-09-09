@@ -46,7 +46,7 @@
             <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#uploadModal" style="margin-top: 0px;">
                     <i class="fa fa-plus"></i>Upload
             </button>
-            <div style="float: left;padding: 7px 0px;"><span style="margin: 0px 10px;">Sort by:</span><router-link :to="{name: 'Reports', query: {ordering: 'add_time'}}" class="report-link">Create time</router-link><router-link :to="{name: 'Reports', query: {ordering: 'alpha_name'}}" class="report-link">Alpha name</router-link><router-link :to="{name: 'Reports', query: {ordering: 'status'}}" class="report-link">Status</router-link></div>
+            <div style="float: left;padding: 7px 0px;"><span style="margin: 0px 10px;">Sort by:</span><span class="report-link" @click="change_sort('add_time')">Create time</span><span class="report-link" @click="change_sort('alpha_name')">Alpha name</span><span class="report-link" @click="change_sort('status')">Status</span></div>
             <ul class="list-group" style="margin-top: 70px">
                 <li class="list-group-item" v-for="report in reports"><router-link :to="{'name':'ReportDetail', params:{'id':report.report_id}}" class="report-link">{{report.alpha_name}}<span class="report-time">{{report.add_time | time}}</span><span class="badge badge-pill"></span></router-link></li>
             </ul>
@@ -95,14 +95,14 @@
                 'param': null,
                 status_success: false,
                 status_error: false,
-                status_pending: false
+                status_pending: false,
+                ordering: ''
             }
         },
         mounted () {
             let page = GetUrlParams('p')
-            let ordering = GetUrlParams('ordering')
             if (!page) {
-                axios.get('http://localhost:8000/report/?ordering=' + ordering).then((response) => {
+                axios.get('http://localhost:8000/report/').then((response) => {
                     this.all_pages = response.data.count / 10 + 1
                     for (let i = 1; i <= min(this.all_pages, 3); i++) {
                         this.index_in_row.push(i)
@@ -114,7 +114,7 @@
                     console.log(e)
                 })
             } else {
-                axios.get('http://localhost:8000/report/?ordering=' + ordering + '?p=' + page).then((response) => {
+                axios.get('http://localhost:8000/report/?p=' + page).then((response) => {
                     this.all_pages = response.data.count / 10 + 1
                     for (let i = max(page-(this.all_pages - page)>1?2:1,1); i <= min(this.all_pages, page + 3); i++) {
                         this.index_in_row.push(i)
@@ -128,7 +128,30 @@
                 })
             }
         },
+        watch: {
+            reports (_, new_) {
+                console.log(_)
+                console.log(new_)
+            },
+            ordering (_, new_) {
+                console.log(new_)
+                this.reports = []
+                this.index_in_row = []
+                axios.get('http://localhost:8000/report/?ordering=' + new_).then((response) => {
+                    for (let i = 1; i <= min(this.all_pages, 3); i++) {
+                        this.index_in_row.push(i)
+                    }
+                    for (let i = 0; i < response.data.results.length; i++) {
+                        this.reports.push(response.data.results[i])
+                    }
+                })
+            }
+        },
         methods: {
+            change_sort(o) {
+                this.ordering = o
+                console.log(this.ordering)
+            },
             set_status(p) {
                 if(p == 0) { this.status_pending = true }
                 else {
@@ -154,7 +177,6 @@
                     return
 
                 } 
-                console.log(this.alpha_name.length)
                 if (this.alpha_name.replace(/(^s*)|(s*$)/g, "") == 0) {
                     $('#name_input').addClass('is_invalid')
                     $('#alpha').html('Must have a name.')
@@ -220,7 +242,7 @@
                 }
             },
             goto_page (page) {
-                axios.get('http://localhost:8000/report/?p=' + page).then((response) => {
+                axios.get('http://localhost:8000/report/?ordering=' + this.ordering + '&p=' + page).then((response) => {
                     this.current_page = page
                     this.index_in_row = []
                     for (let i = max(page-((this.all_pages - page)>1?2:1),1); i <= min(this.all_pages, page + 3); i++) {

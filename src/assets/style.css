@@ -43,6 +43,7 @@
 }
 .report-link {
     color: #801818;
+    cursor: pointer;
 }
 
 .report-link + .report-link {
