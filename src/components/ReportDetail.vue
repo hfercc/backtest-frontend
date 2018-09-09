@@ -175,6 +175,7 @@
                     this.status_pending = false
                     this.status_waiting = true
                     this.status_success = false
+                    this.report.status = 0
                 //this.new_report = this.report = response.data
                 }).catch((e) => {
                     this.filename = ''
