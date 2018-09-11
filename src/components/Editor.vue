@@ -30,9 +30,11 @@
                         <option>IF hedge</option>
                     </select>
                 </div>
-                <button type="button" style="margin-top: 20px;float: left" class="btn btn-custom" data-toggle="modal" data-target="#uploadModal">
-                    <i class="fa fa-plus"></i>提交
-                </button>
+                <div class="form-row">
+                    <button type="button" style="margin-top: 20px;float: left" class="btn btn-custom" data-toggle="modal" data-target="#uploadModal">
+                        <i class="fa fa-plus"></i>提交
+                    </button>
+                </div>
                 <div class="form-row">
                     <label for="" style="margin-top: 15px;">Console Output</label>
                     <textarea class="form-control" id="console_output" rows="3" disabled></textarea>
