@@ -1,18 +1,34 @@
 <template>
     <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
-            <codemirror v-model="code" :options="options" style="text-align: left;margin-top: 20px;"></codemirror>
+        <div class="col-6">
+            <codemirror v-model="code" :options="options" style="text-align: left;"></codemirror>
+        </div>
+        <div class="col-6">
             <form style="margin-top: 20px;">
                 <div class="form-row">
-                    <div class="col-1"><label for="" style="margin-top: 5px;">Start date</label></div>
-                    <div class="col-5">
-                        <date-picker v-model="startdate" :config="options_date"></date-picker>
-                    </div>
-                    <div class="col-1"><label for="" style="margin-top: 5px;">End date</label></div>
-                    <div class="col-5">
-                        <date-picker v-model="startdate" :config="options_date"></date-picker>
-                    </div>
+                    <label for="" style="margin-top: 5px;">Start date</label>
+                    <date-picker v-model="startdate" :config="options_date"></date-picker>
+                </div>
+                <div class="form-row">
+                    <label for="" style="margin-top: 5px;">End date</label>
+                    <date-picker v-model="startdate" :config="options_date"></date-picker>
+                </div>
+                <div class="form-row">
+                    <label for="universe" style="margin-top: 5px;">Univerese</label>
+                    <select class="form-control" id="universe">
+                        <option>ALL</option>
+                        <option>zz500</option>
+                        <option>hs300</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="backtest_type" style="margin-top: 5px;">Type</label>
+                    <select class="form-control" id="backtest_type">
+                        <option>longonly</option>
+                        <option>longshort</option>
+                        <option>IC hedge</option>
+                        <option>IF hedge</option>
+                    </select>
                 </div>
             </form>
             <button type="button" style="margin-top: 20px;float: left" class="btn btn-custom" data-toggle="modal" data-target="#uploadModal">
@@ -38,6 +54,16 @@
     require('codemirror/addon/search/search.js')
     require('codemirror/addon/search/searchcursor.js')
     require('codemirror/addon/selection/active-line.js')
+    $(document).ready(function() {
+        if ($('.CodeMirror')) {
+            $('.CodeMirror').css('height', $(window).height() - $('.navbar').height())
+        }
+    })
+    $(window).resize(function() {
+        if ($('.CodeMirror')) {
+            $('.CodeMirror').css('height', $(window).height() - $('.navbar').height())
+        }
+    })
     export default {
         components: {
             codemirror, 
