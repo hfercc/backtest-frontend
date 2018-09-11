@@ -4,7 +4,7 @@
             <codemirror v-model="code" :options="options" style="text-align: left;"></codemirror>
         </div>
         <div class="col-6">
-            <form style="margin-top: 20px;">
+            <form style="margin-top: 20px; width: 95%">
                 <div class="form-row">
                     <label for="" style="margin-top: 5px;">Start date</label>
                     <date-picker v-model="startdate" :config="options_date"></date-picker>
@@ -30,10 +30,14 @@
                         <option>IF hedge</option>
                     </select>
                 </div>
-            </form>
-            <button type="button" style="margin-top: 20px;float: left" class="btn btn-custom" data-toggle="modal" data-target="#uploadModal">
-                <i class="fa fa-plus"></i>提交
-            </button>
+                <button type="button" style="margin-top: 20px;float: left" class="btn btn-custom" data-toggle="modal" data-target="#uploadModal">
+                    <i class="fa fa-plus"></i>提交
+                </button>
+                <div class="form-row">
+                    <label for="" style="margin-top: 15px;">Console Output</label>
+                    <textarea class="form-control" id="console_output" rows="3" disabled></textarea>
+                </div>
+            </form>     
         </div>
     </div>
 </template>
