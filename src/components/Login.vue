@@ -26,7 +26,7 @@
             next( vm => {
                 if (vm.$root.user) {vm.$router.push({name: 'Reports'})}
                 else {
-                    axios.get('http://localhost:8000/users/me/').then((response) => {
+                    axios.get('/api/users/me/').then((response) => {
                         vm.$root.user = response.data
                         vm.$router.push({name: 'Reports'})
                     }).catch((e) => {;})
@@ -42,7 +42,7 @@
             Submit () {
                 $('#username_input').removeClass('is-invalid')
                 $('#password_input').removeClass('is-invalid') 
-                axios.post('http://localhost:8000/login/', {
+                axios.post('/api/login/', {
                     username: this.username,
                     password: this.password
                 }).then((response) => {
