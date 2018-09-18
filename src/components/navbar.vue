@@ -84,7 +84,7 @@
         },
         created() {
             if (this.$root.user == null) {
-                axios.get('http://localhost:8000/users/me/').then((response) => {
+                axios.get('api/users/me/').then((response) => {
                     this.$root.user = response.data
                 }).catch((e) => {
                     this.$router.push({'name':'Login'})
@@ -98,7 +98,7 @@
                 this.$router.push({name:"Login"})
             },
             change_password() {
-              axios.post('http://localhost:8000/users/change_password/', {
+              axios.post('api/users/change_password/', {
                 old: this.password_old,
                 new: this.password_new,
                 user: this.$root.user
