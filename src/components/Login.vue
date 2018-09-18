@@ -29,7 +29,7 @@
                     axios.get('/api/users/me/').then((response) => {
                         vm.$root.user = response.data
                         vm.$router.push({name: 'Reports'})
-                    }).catch((e) => {;})
+                    }).catch((e) => {console.log(e)})
                 }
         })},
         data () {
