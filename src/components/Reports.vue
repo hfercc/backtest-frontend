@@ -102,7 +102,7 @@
         mounted () {
             let page = GetUrlParams('p')
             if (!page) {
-                axios.get('api/report/').then((response) => {
+                axios.get('/api/report/').then((response) => {
                     this.all_pages = response.data.count / 10 + 1
                     for (let i = 1; i <= min(this.all_pages, 3); i++) {
                         this.index_in_row.push(i)
@@ -114,7 +114,7 @@
                     console.log(e)
                 })
             } else {
-                axios.get('api/report/?p=' + page).then((response) => {
+                axios.get('/api/report/?p=' + page).then((response) => {
                     this.all_pages = response.data.count / 10 + 1
                     for (let i = max(page-(this.all_pages - page)>1?2:1,1); i <= min(this.all_pages, page + 3); i++) {
                         this.index_in_row.push(i)
@@ -137,7 +137,7 @@
                 console.log(new_)
                 this.reports = []
                 this.index_in_row = []
-                axios.get('api/report/?ordering=' + new_).then((response) => {
+                axios.get('/api/report/?ordering=' + new_).then((response) => {
                     for (let i = 1; i <= min(this.all_pages, 3); i++) {
                         this.index_in_row.push(i)
                     }
@@ -192,9 +192,9 @@
                 this.param.append('alpha_name', this.alpha_name)
                 $('#name_input').removeClass('is_invalid')
                 if (this.$root.user == null) {
-                    axios.get('api/users/me/').then((response) => {
+                    axios.get('/api/users/me/').then((response) => {
                         this.$root.user = response.data
-                    }).post('api/upload/',
+                    }).post('/api/upload/',
                     this.param, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -202,7 +202,7 @@
                     }
                 ).then((response) => {
                     this.fileurl = response.data
-                    return axios.post('api/report/', {
+                    return axios.post('/api/report/', {
                             author: this.$root.user.id,
                             alpha_name: this.alpha_name,
                             file:this.fileurl
@@ -215,7 +215,7 @@
                         $('#alpha').css('display', 'block')
                     })
                 } else {
-                    axios.post('api/upload/',
+                    axios.post('/api/upload/',
                         this.param, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
@@ -223,7 +223,7 @@
                         }
                     ).then((response) => {
                         this.fileurl = response.data
-                        return axios.post('api/report/', {
+                        return axios.post('/api/report/', {
                             alpha_name: this.alpha_name,
                             file: this.fileurl,
                             author: this.$root.user.id,
@@ -242,7 +242,7 @@
                 }
             },
             goto_page (page) {
-                axios.get('api/report/?ordering=' + this.ordering + '&p=' + page).then((response) => {
+                axios.get('/api/report/?ordering=' + this.ordering + '&p=' + page).then((response) => {
                     this.current_page = page
                     this.index_in_row = []
                     for (let i = max(page-((this.all_pages - page)>1?2:1),1); i <= min(this.all_pages, page + 3); i++) {

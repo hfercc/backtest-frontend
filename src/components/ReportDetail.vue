@@ -119,7 +119,7 @@
         },
         mounted () {
             let pk = GetUrlParams('pk')
-            axios.get('api/report/' + this.$route.params.id + '/').then((response) => {
+            axios.get('/api/report/' + this.$route.params.id + '/').then((response) => {
                 console.log(response)
                 this.new_report = this.report = response.data
                 this.set_status(response.data.status)
@@ -158,7 +158,7 @@
             submitReport () {
                 this.param.append('alpha_name', this.report.alpha_name)
                 $('#name_input').removeClass('is_invalid')
-                axios.post('api/upload/',
+                axios.post('/api/upload/',
                     this.param, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -166,7 +166,7 @@
                     }
                 ).then((response) => {
                     this.filename = ''
-                    return axios.patch('api/report/' + this.report.report_id + '/', {
+                    return axios.patch('/api/report/' + this.report.report_id + '/', {
                         file: this.report.file,
                     })
                 }).then((response) => {
