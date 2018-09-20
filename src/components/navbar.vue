@@ -98,7 +98,7 @@
                 this.$router.push({name:"Login"})
             },
             change_password() {
-              axios.post('api/users/change_password/', {
+              axios.post('/api/users/change_password/', {
                 old: this.password_old,
                 new: this.password_new,
                 user: this.$root.user
