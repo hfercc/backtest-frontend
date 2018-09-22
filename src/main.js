@@ -68,6 +68,9 @@ window.GetUrlParams = GetUrlParams
 axios.interceptors.request.use(
     config => {
         let token = store.get('token')
+        config.headers['X-Requested-With'] = 'XMLHttpRequest';
+        let regex = /.*csrftoken=([^;.]*).*$/;
+	config.headers['X-CSRFToken']=document.cookie.match(regex)===null?null:document.cookie.match(regex)[1];
         if (token && token.length > 0)
             config.headers['Authorization'] = 'JWT ' + token
         return config
