@@ -84,7 +84,7 @@
         },
         created() {
             if (this.$root.user == null) {
-                axios.get('api/users/me/').then((response) => {
+                axios.get('/api/users/me/').then((response) => {
                     this.$root.user = response.data
                 }).catch((e) => {
                     this.$router.push({'name':'Login'})
