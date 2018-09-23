@@ -35,7 +35,7 @@
             next( vm => {
                 if (vm.$root.user) {vm.$router.push({name: 'Reports'})}
                 else {
-                    axios.get('api/users/me/').then((response) => {
+                    axios.get('/api/users/me/').then((response) => {
                         vm.$root.user = response.user
                         vm.$router.push({name: 'Reports'})
                     }).catch((e) => {;})
@@ -50,7 +50,7 @@
         },
         methods: {
             Submit () {
-                axios.post('api/users/', {
+                axios.post('/api/users/', {
                     username: this.username,
                     password: this.password,
                     email: this.email
