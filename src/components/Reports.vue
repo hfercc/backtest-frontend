@@ -130,11 +130,8 @@
         },
         watch: {
             reports (_, new_) {
-                console.log(_)
-                console.log(new_)
             },
             ordering (_, new_) {
-                console.log(new_)
                 this.reports = []
                 this.index_in_row = []
                 axios.get('/api/report/?ordering=' + new_).then((response) => {
