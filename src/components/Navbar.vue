@@ -10,6 +10,9 @@
       <li class="nav-item active">
         <router-link class="nav-link" :to="{name: 'Reports'}">Home <span class="sr-only">(current)</span></router-link>
       </li>
+      <!--li class="nav-item active">
+        <router-link class="nav-link" :to="{name: 'Reports'}">Online Editor</router-link>
+      </li-->
     </ul>
     <ul class="navbar-nav mr-0">
         <template v-if="!is_authenticated">
@@ -35,7 +38,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="changePasswordModalCenterTitle">Change Password</h5>
+                    <h5 class="modal-title" id="changePasswordModalCenterTitle">Change Paassword</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -81,7 +84,7 @@
         },
         created() {
             if (this.$root.user == null) {
-                axios.get('http://localhost:8000/users/me/').then((response) => {
+                axios.get('/api/users/me/').then((response) => {
                     this.$root.user = response.data
                 }).catch((e) => {
                     this.$router.push({'name':'Login'})
@@ -95,12 +98,11 @@
                 this.$router.push({name:"Login"})
             },
             change_password() {
-              axios.post('http://localhost:8000/users/change_password/', {
+              axios.post('/api/users/change_password/', {
                 old: this.password_old,
                 new: this.password_new,
                 user: this.$root.user
               }).then((response) => {
-                console.log(response)
                 this.old = this.new = ''
                 $('#changePassword').modal('hide')
               }).catch((e) => {
