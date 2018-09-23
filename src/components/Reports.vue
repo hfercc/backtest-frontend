@@ -150,7 +150,6 @@
         methods: {
             change_sort(o) {
                 this.ordering = o
-                console.log(this.ordering)
             },
             set_status(p) {
                 if(p == 0) { this.status_pending = true }
@@ -161,6 +160,7 @@
             },
             uploadReport (p) {
                 let file = p.target.files[0]
+                console.log(file)
                 this.filename = file.name
                 let param = new FormData()
                 param.append('file', file, file.name)
@@ -208,7 +208,6 @@
                             file:this.fileurl
                         })
                     }).then((response) => {
-                        console.log(response)
                     }).catch((e) => {
                         $('#name_input').addClass('is_invalid')
                         $('#alpha').html('Duplicated name.')
@@ -229,7 +228,6 @@
                             author: this.$root.user.id,
                         })
                     }).then((response) => {
-                        console.log(response)
                         this.alpha_name = ''
                         this.filename = ''
                         $('#uploadModal').modal('hide')

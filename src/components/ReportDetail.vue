@@ -120,14 +120,11 @@
         mounted () {
             let pk = GetUrlParams('pk')
             axios.get('/api/report/' + this.$route.params.id + '/').then((response) => {
-                console.log(response)
                 this.new_report = this.report = response.data
                 this.set_status(response.data.status)
                 if (response.data.status == 2) {
-                    console.log('got')
                     axios.get('/api/files/' + response.data.alpha_name + '/output_performance.csv').then((response) => {
                         this.performace = response.data.ret
-                        console.log(this.performace)
                     }).catch(e => {
                         console.log(e)
                     })
@@ -138,7 +135,6 @@
         },
         methods: {
             set_status(p) {
-                console.log(p)
                 if(p == 1) { this.status_pending = true }
                 else {
                     if (p == 2) { this.status_success = true }

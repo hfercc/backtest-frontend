@@ -103,7 +103,6 @@
                 new: this.password_new,
                 user: this.$root.user
               }).then((response) => {
-                console.log(response)
                 this.old = this.new = ''
                 $('#changePassword').modal('hide')
               }).catch((e) => {

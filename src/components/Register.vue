@@ -58,7 +58,6 @@
                     store.set('token', response.data.token)
                     this.$router.push({name: 'Reports'})
                 }).catch((e) => {
-                    console.log(e)
                     if($('#message_slot').html().length == 0) {
                         $('#message_slot').append('<div class="alert alert-danger alert-dismissible fade show" role="alert">Network Error! \
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"> \
