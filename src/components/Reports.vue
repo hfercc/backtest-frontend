@@ -12,11 +12,32 @@
                 </div>
                 <div class="modal-body">
                     <form>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <label class="form-check-label" for="inlineRadio1">Formulaic</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">Non-Formulaic</label>
+                        </div>
                         <div class="form-group">
                             <label for="name_input">Alpha Name</label>
                             <input type="text" class="form-control" id="name_input" placeholder="Enter Alpha Name"  v-model="alpha_name">
                             <div class="invalid-feedback" id="alpha">
                             </div>
+                            <label for="type">Type select</label>
+                            <select class="form-control" id="type">
+                                <option>longshort</option>
+                                <option>longonly</option>
+                                <option>IC_hedge</option>
+                                <option>IF_hedge</option>
+                            </select>
+                            <label for="universe">Universe select</label>
+                            <select class="form-control" id="universe">
+                                <option>ALL</option>
+                                <option>zz500</option>
+                                <option>hs300</option>
+                            </select>
                             <div class="custom-file" style="margin-top: 50px">
                                 <input type="file" class="custom-file-input" id="customFile" @change="uploadReport" accept="application/zip">
                                 <label class="custom-file-label" for="customFile">{{filename}}</label>
@@ -93,6 +114,8 @@
                 'all_pages': 1,
                 'index_in_row': [],
                 'param': null,
+                'option1': false,
+                'option2': true,
                 status_success: false,
                 status_error: false,
                 status_pending: false,
