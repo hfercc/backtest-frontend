@@ -13,11 +13,11 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="option1">
                             <label class="form-check-label" for="inlineRadio1">Formulaic</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" v-model="option2">
                             <label class="form-check-label" for="inlineRadio2">Non-Formulaic</label>
                         </div>
                         <div class="form-group">
@@ -26,14 +26,14 @@
                             <div class="invalid-feedback" id="alpha">
                             </div>
                             <label for="type">Type select</label>
-                            <select class="form-control" id="type">
+                            <select class="form-control" id="type" v-model='type'>
                                 <option>longshort</option>
                                 <option>longonly</option>
                                 <option>IC_hedge</option>
                                 <option>IF_hedge</option>
                             </select>
                             <label for="universe">Universe select</label>
-                            <select class="form-control" id="universe">
+                            <select class="form-control" id="universe" v-model='universe'>
                                 <option>ALL</option>
                                 <option>zz500</option>
                                 <option>hs300</option>
@@ -116,6 +116,8 @@
                 'param': null,
                 'option1': false,
                 'option2': true,
+                'type': '',
+                'universe': '',
                 status_success: false,
                 status_error: false,
                 status_pending: false,
@@ -188,6 +190,7 @@
                 this.param = param
             },
             submitReport () {
+                console.log(this.universe)
                 $('#file').css('display', 'none')
                 $('#alpha').css('display', 'none')
                 $('#name_input').removeClass('is_invalid')
