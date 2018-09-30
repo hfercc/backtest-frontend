@@ -116,12 +116,15 @@
                 'param': null,
                 'option1': false,
                 'option2': true,
-                'type': '',
+                'types': '',
                 'universe': '',
+                'alpha_type':'',
                 status_success: false,
                 status_error: false,
                 status_pending: false,
-                ordering: ''
+                ordering: '',
+                type_list: {'longshort':0, 'longonly':1, 'IC_hedge':2, 'IF_hedge': 3},
+                universe_list: {'ALL':0, 'zz500':1, 'hs300':2}
             }
         },
         mounted () {
@@ -190,7 +193,13 @@
                 this.param = param
             },
             submitReport () {
-                console.log(this.universe)
+                let universe_code = this.universe_list[this.universe]
+                let type_code = this.type_list[this.types]
+                if (this.option1) {
+                    this.alpha_type = 1
+                } else {
+                    this.alpha_type = 0
+                }
                 $('#file').css('display', 'none')
                 $('#alpha').css('display', 'none')
                 $('#name_input').removeClass('is_invalid')
@@ -212,6 +221,18 @@
                         $('#alpha').css('display', 'block')
                     return 
                 }
+                if (universe_code === undefined) {
+                    $('#universe').addClass('is_invalid')
+                    $('#alpha').html('Must choose a universe.')
+                        $('#alpha').css('display', 'block')
+                    return 
+                }
+                if (type_code === undefined) {
+                    $('#type').addClass('is_invalid')
+                    $('#alpha').html('Must choose a type.')
+                        $('#alpha').css('display', 'block')
+                    return 
+                }
                 this.param.append('alpha_name', this.alpha_name)
                 $('#name_input').removeClass('is_invalid')
                 if (this.$root.user == null) {
@@ -228,7 +249,9 @@
                     return axios.post('/api/report/', {
                             author: this.$root.user.id,
                             alpha_name: this.alpha_name,
-                            file:this.fileurl
+                            file:this.fileurl,
+                            universe: universe_code,
+                            type_code: type_code
                         })
                     }).then((response) => {
                     }).catch((e) => {
@@ -249,6 +272,8 @@
                             alpha_name: this.alpha_name,
                             file: this.fileurl,
                             author: this.$root.user.id,
+                            universe: universe_code,
+                            type_code: type_code
                         })
                     }).then((response) => {
                         this.alpha_name = ''
