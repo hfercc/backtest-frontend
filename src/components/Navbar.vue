@@ -82,7 +82,7 @@
                 return (this.$root.user !== null)
             }
         },
-        /*created() {
+        created() {
             if (this.$root.user == null) {
                 axios.get('/api/users/me/').then((response) => {
                     this.$root.user = response.data
@@ -90,7 +90,7 @@
                     this.$router.push({'name':'Login'})
                 })
             }
-        },*/
+        },
         methods: {
             logout() {
                 store.set('token', '')
