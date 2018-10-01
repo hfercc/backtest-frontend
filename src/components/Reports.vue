@@ -13,11 +13,11 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="option1">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="alpha_type" value="1">
                             <label class="form-check-label" for="inlineRadio1">Formulaic</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" v-model="option2">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" v-model="alpha_type" value="0">
                             <label class="form-check-label" for="inlineRadio2">Non-Formulaic</label>
                         </div>
                         <div class="form-group">
@@ -26,18 +26,22 @@
                             <div class="invalid-feedback" id="alpha">
                             </div>
                             <label for="type">Type select</label>
-                            <select class="form-control" id="type" v-model='type'>
+                            <select class="form-control" id="type" v-model='types'>
                                 <option>longshort</option>
                                 <option>longonly</option>
                                 <option>IC_hedge</option>
                                 <option>IF_hedge</option>
                             </select>
+                            <div class="invalid-feedback" id="type_back">
+                            </div>
                             <label for="universe">Universe select</label>
                             <select class="form-control" id="universe" v-model='universe'>
                                 <option>ALL</option>
                                 <option>zz500</option>
                                 <option>hs300</option>
                             </select>
+                            <div class="invalid-feedback" id="universe_back">
+                            </div>
                             <div class="custom-file" style="margin-top: 50px">
                                 <input type="file" class="custom-file-input" id="customFile" @change="uploadReport" accept="application/zip">
                                 <label class="custom-file-label" for="customFile">{{filename}}</label>
@@ -114,11 +118,9 @@
                 'all_pages': 1,
                 'index_in_row': [],
                 'param': null,
-                'option1': false,
-                'option2': true,
                 'types': '',
                 'universe': '',
-                'alpha_type':'',
+                'alpha_type':1,
                 status_success: false,
                 status_error: false,
                 status_pending: false,
@@ -193,15 +195,13 @@
                 this.param = param
             },
             submitReport () {
+                console.log(this.alpha_type)
                 let universe_code = this.universe_list[this.universe]
                 let type_code = this.type_list[this.types]
-                if (this.option1) {
-                    this.alpha_type = 1
-                } else {
-                    this.alpha_type = 0
-                }
                 $('#file').css('display', 'none')
                 $('#alpha').css('display', 'none')
+                $('#universe_back').css('display', 'none')
+                $('#type_back').css('display', 'none')
                 $('#name_input').removeClass('is_invalid')
                 if (this.param == null) {
                     $('#file').html('Must select a file.')
@@ -221,16 +221,17 @@
                         $('#alpha').css('display', 'block')
                     return 
                 }
+                console.log(universe_code, type_code, this.alpha_type)
                 if (universe_code === undefined) {
                     $('#universe').addClass('is_invalid')
-                    $('#alpha').html('Must choose a universe.')
-                        $('#alpha').css('display', 'block')
+                    $('#universe_back').html('Must choose a universe.')
+                        $('#universe_back').css('display', 'block')
                     return 
                 }
                 if (type_code === undefined) {
                     $('#type').addClass('is_invalid')
-                    $('#alpha').html('Must choose a type.')
-                        $('#alpha').css('display', 'block')
+                    $('#type_back').html('Must choose a type.')
+                        $('#type_back').css('display', 'block')
                     return 
                 }
                 this.param.append('alpha_name', this.alpha_name)
@@ -251,7 +252,8 @@
                             alpha_name: this.alpha_name,
                             file:this.fileurl,
                             universe: universe_code,
-                            type_code: type_code
+                            type_code: type_code,
+                            alpha_type: this.alpha_type
                         })
                     }).then((response) => {
                     }).catch((e) => {
@@ -273,7 +275,8 @@
                             file: this.fileurl,
                             author: this.$root.user.id,
                             universe: universe_code,
-                            type_code: type_code
+                            type_code: type_code,
+                            alpha_type: this.alpha_type
                         })
                     }).then((response) => {
                         this.alpha_name = ''
