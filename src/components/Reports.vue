@@ -235,6 +235,8 @@
                     return 
                 }
                 this.param.append('alpha_name', this.alpha_name)
+                this.param.append('type_code', type_code)
+                this.param.append('universe', universe_code)
                 $('#name_input').removeClass('is_invalid')
                 if (this.$root.user == null) {
                     axios.get('/api/users/me/').then((response) => {
