@@ -234,6 +234,7 @@
                         $('#type_back').css('display', 'block')
                     return 
                 }
+                this.alpha_name = 'alpha_' + this.alpha_name + '_' + this.types + '_' + this.universe
                 this.param.append('alpha_name', this.alpha_name)
                 $('#name_input').removeClass('is_invalid')
                 if (this.$root.user == null) {
