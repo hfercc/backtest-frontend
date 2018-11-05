@@ -93,9 +93,11 @@
         },
         methods: {
             logout() {
-                store.set('token', '')
-                this.$root.user = null
-                this.$router.push({name:"Login"})
+                axios.get('/api/logout/').then(() => {
+                    this.$root.user = null
+                    this.$router.push({name:"Login"})
+                    store.set('token', '')
+                })          
             },
             change_password() {
               axios.post('/api/users/change_password/', {
