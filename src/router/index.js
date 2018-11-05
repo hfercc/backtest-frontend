@@ -21,7 +21,7 @@ export default new Router({
       component: Login
     },
     {
-        path: '/reports',
+        path: '/alpha_submit',
         name: 'Reports',
         component: Reports
     },
