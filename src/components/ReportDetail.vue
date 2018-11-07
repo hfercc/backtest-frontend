@@ -58,7 +58,7 @@
                     </template>
                 </template>
             </span></p>
-            <img v-if="report.status == 2" :src="'/api/files/' + report.alpha_name + '/output_pnl.png'">
+            <img v-if="report.status == 2" :src="'/api/files/' + report.report_id + '/output_pnl.png'">
             <div class="table-responsive" v-if="report.status == 2">
                 <table class="table">
                     <thead>
@@ -123,7 +123,7 @@
                 this.new_report = this.report = response.data
                 this.set_status(response.data.status)
                 if (response.data.status == 2) {
-                    axios.get('/api/files/' + response.data.alpha_name + '/output_performance.csv').then((response) => {
+                    axios.get('/api/files/' + response.data.report_id + '/output_performance.csv').then((response) => {
                         this.performace = response.data.ret
                     }).catch(e => {
                         console.log(e)
