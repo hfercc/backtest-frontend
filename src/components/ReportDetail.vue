@@ -58,7 +58,7 @@
                     </template>
                 </template>
             </span></p>
-            <img v-if="report.status == 2" :src="'/api/files/' + report.report_id + '/output_pnl.png'">
+            <img v-if="report.status == 2" :src="img">
             <div class="table-responsive" v-if="report.status == 2">
                 <table class="table">
                     <thead>
@@ -115,6 +115,7 @@
                 status_waiting: false,
                 performace: null,
                 param: null,
+                img: null, 
             }
         },
         mounted () {
@@ -128,11 +129,18 @@
                     }).catch(e => {
                         console.log(e)
                     })
+                    axios.get('/api/files/' + response.data.report_id + '/output_pnl.png', {
+                        responseType: 'arraybuffer'
+                    }).then((response) => {
+                        return window.URL.createObjectURL(new Blob(response));
+                    }).then((data) => {
+                        this.img = data;
+                    })
                 }
             }).catch((e) => {
                 console.log(e)
             })
-        },
+        },      
         methods: {
             set_status(p) {
                 if(p == 1) { this.status_pending = true }
