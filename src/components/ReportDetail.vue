@@ -66,7 +66,7 @@
             <p> 
                             <br> {{report.error_message}} 
             </p>
-            <div class="table-responsive" v-if="report.status == 2 || report.status == 4">
+            <div class="table-responsive" v-if="report.status == 2 || report.status == 4"
                 <table class="table">
                     <thead>
                         <tr>
