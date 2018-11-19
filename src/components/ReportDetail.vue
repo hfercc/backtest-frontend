@@ -53,11 +53,13 @@
                         </template>
                         <template v-else>
                             failed
-                            
                         </template>   
                     </template>
                 </template>
             </span></p>
+            <p> 
+                            <br> {{report.error_message}} 
+            </p>
             <img v-if="report.status == 2" :src="img">
             <div class="table-responsive" v-if="report.status == 2">
                 <table class="table">
@@ -115,7 +117,7 @@
                 status_waiting: false,
                 performace: null,
                 param: null,
-                img: null, 
+                img: '' , 
             }
         },
         mounted () {
@@ -132,9 +134,8 @@
                     axios.get('/api/files/' + response.data.report_id + '/output_pnl.png', {
                         responseType: 'arraybuffer'
                     }).then((response) => {
-                        return window.URL.createObjectURL(new Blob(response));
-                    }).then((data) => {
-                        this.img = data;
+                        this.img = 'data:image/png;base64,' +btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))
+                        console.log(this.img)
                     })
                 }
             }).catch((e) => {
