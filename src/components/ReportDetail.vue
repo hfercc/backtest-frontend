@@ -39,7 +39,7 @@
                 </ol>
             </nav>
             <h1>{{new_report.alpha_name}}</h1>
-            <p>status: <span class="badge badge-pill" v-bind:class="{'badge-warning': status_pending, 'badge-success':status_success, 'badge-danger':status_error, 'badge-primary':status_waiting}">
+            <p>status: <span class="badge badge-pill" v-bind:class="{'badge-warning': status_pending, 'badge-success':status_success, 'badge-danger':status_error, 'badge-primary':status_waiting, 'badge-info': status_submitted}">
                 <template v-if="report.status == 0">
                     waiting
                 </template>
@@ -52,8 +52,12 @@
                             finished
                         </template>
                         <template v-else>
-                            failed
-                            
+                            <template v-if="report.status == 4">
+                            subbmited
+                            </template>
+                            <template v-else>
+                                failed
+                            </template>
                         </template>   
                     </template>
                 </template>
@@ -146,9 +150,13 @@
                 if(p == 1) { this.status_pending = true }
                 else {
                     if (p == 2) { this.status_success = true }
-                    else 
+                    else {
                         if (p == 3) { this.status_error = true }
-                        else this.status_waiting = true
+                        else {
+                            if (p == 4) this.status_submitted = true
+                            else this.status_waiting = true
+                        }
+                    }
                 }
             },
             uploadReport (p) {
@@ -179,6 +187,7 @@
                     this.status_pending = false
                     this.status_waiting = true
                     this.status_success = false
+                    this.status_submitted = false
                     this.report.status = 0
                 //this.new_report = this.report = response.data
                 }).catch((e) => {
