@@ -62,8 +62,8 @@
                     </template>
                 </template>
             </span></p>
-            <img v-if="report.status == 2" :src="img">
-            <div class="table-responsive" v-if="report.status == 2">
+            <img v-if="report.status == 2 || report.status==5" :src="img">
+            <div class="table-responsive" v-if="report.status == 2 || report.status == 5">
                 <table class="table">
                     <thead>
                         <tr>
