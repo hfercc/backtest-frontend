@@ -63,10 +63,10 @@
                 </template>
             </span></p>
             <img v-if="report.status == 2 || report.status == 4" :src="img">
-            <div class="table-responsive" v-if="report.status == 2 || report.status == 4">
             <p> 
                             <br> {{report.error_message}} 
             </p>
+            <div class="table-responsive" v-if="report.status == 2 || report.status == 4">
                 <table class="table">
                     <thead>
                         <tr>
