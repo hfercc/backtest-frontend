@@ -130,7 +130,7 @@
             axios.get('/api/report/' + this.$route.params.id + '/').then((response) => {
                 this.new_report = this.report = response.data
                 this.set_status(response.data.status)
-                if (response.data.status == 2) {
+                if (response.data.status == 2 || response.data.status == 4 ) {
                     axios.get('/api/files/' + response.data.report_id + '/output_performance.csv').then((response) => {
                         this.performace = response.data.ret
                     }).catch(e => {
