@@ -176,7 +176,12 @@
         },
         methods: {
             change_sort(o) {
-                this.ordering = o
+                if(o == 'add_time' && this.ordering == 'add_time') 
+                    { this.ordering = '-add_time' }
+                else if (o == 'alpha_name' && this.ordering == 'alpha_name') {
+                    this.ordering = '-alpha_name'
+                }
+                else this.ordering = o
             },
             set_status(p) {
                 if(p == 0) { this.status_pending = true }
