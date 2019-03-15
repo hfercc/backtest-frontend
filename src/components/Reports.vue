@@ -127,7 +127,7 @@
                 status_pending: false,
                 ordering: '',
                 type_list: {'longshort':0, 'longonly':1, 'IC_hedge':2, 'IF_hedge': 3},
-                universe_list: {'ALL':0, 'zz500':1, 'hs300':2, 'zz500T'}
+                universe_list: {'ALL':0, 'zz500':1, 'hs300':2, 'zz500T': 3}
             }
         },
         mounted () {
